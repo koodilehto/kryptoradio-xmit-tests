@@ -68,6 +68,7 @@ class KryptoBotFactory(protocol.ClientFactory):
     def buildProtocol(self, addr):
         bot = KryptoBot()
         bot.factory = self
+        bot.nickname = self.nickname
         return bot
 
     def clientConnectionLost(self, connector, reason):
