@@ -1,5 +1,6 @@
 import serial
 import argparse
+import time
 
 parser = argparse.ArgumentParser(description='Kryptoradio Test #1.')
 parser.add_argument('device', type=str, nargs=1, help='Serial device')
@@ -15,6 +16,11 @@ except serial.serialutil.SerialException, ex:
     quit()
 
 while 1:
-    for x in range(0,255):
-        ser.write(chr(x))
+    left = ser.outWaiting()
+    if left < 255:
+        for x in range(0,255):
+            ser.write(chr(x))
+    else:
+        print("Waiting for buffer to empty: " + str(left) + " bytes left.")
+        time.sleep(0.1)
 
